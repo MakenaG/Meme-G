@@ -13,7 +13,11 @@ const Login = (props) => {
     const responseGoogle = (response) => {
         // console.log(response)
         props.response(response)
-    }
+      
+        // Redirect the user to the dashboard page
+        window.location.href = "/HomePage";
+      }
+      
     return (
         <div>
             <GoogleLogin
