@@ -17,7 +17,7 @@ const NavBar = () => {
         <div className=" logo-right">
           <img src={logo} alt="meme logo" className="logo-image" />
           <h1 className="logo-text">
-            Mememify <DiGithubBadge />
+            MemeG <DiGithubBadge />
           </h1>
         </div>
       </a>
