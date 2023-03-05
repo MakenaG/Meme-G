@@ -10,6 +10,7 @@ import ImageContext from "./components/ImageContext";
 import MemeImage from "./components/MemeImage";
 import Login from "./components/Login";
 import  Logout  from "./components/Logout";
+// import Search from './components/Search';
 
 function App() {
   const [stateAuth, setStateAuth] = useState()
@@ -35,8 +36,9 @@ function App() {
           <Route path="/generate" element={<GeneratedMeme />} />
           <Route path="/uploadMeme" element={<UploadImage />} />
           <Route path="/customize" element={<CustomizeMeme />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/editMeme" element={<MemeImage />} />
-        </Routes>
+         </Routes>
       </div>
     </ImageContext>
   );

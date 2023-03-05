@@ -14,6 +14,14 @@ const ImageContext = ({ children }) => {
         }
       });
   }, []);
+  useEffect(() => {
+    fetch("http://localhost:9292/test")
+      .then((res) => res.json())
+      .then((res) => {
+        setMeme(res);
+      });
+  }, []);
+  
   return (
     <getImageContext.Provider
       value={{

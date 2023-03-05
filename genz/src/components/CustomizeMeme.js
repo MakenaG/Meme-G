@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { saveAs } from "file-saver";
 
 const CustomizeMeme = ({ image }) => {
-  const downloadImage = () => {
+  const saveImage = () => {
     if (finishedImage) {
       saveAs(finishedImage, "meme.jpg");
     }
@@ -52,8 +52,8 @@ const CustomizeMeme = ({ image }) => {
       <canvas ref={canvas} width={400} height={256 + 80} />
 
       <div className="centerBtn">
-        <button className="btn" onClick={downloadImage}>
-          Download Image
+        <button className="btn" onClick={saveImage}>
+          Save Image
         </button>
       </div>
     </div>

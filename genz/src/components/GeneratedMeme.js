@@ -9,7 +9,7 @@ const GeneratedMeme = () => {
   const url = new URLSearchParams(location.search);
   let query = url.get("url");
 
-  const downloadImage = () => {
+  const saveImage = () => {
     saveAs(query, "meme.jpg");
   };
   return (
@@ -17,8 +17,8 @@ const GeneratedMeme = () => {
       {query && <img className="editMeme" alt="meme" src={query} />}
       <div className="generatedBtn centerBtn">
        
-        <button className="btn" onClick={downloadImage}>
-          Download
+        <button className="btn" onClick={saveImage}>
+          Save
         </button>
       </div>
     </div>
