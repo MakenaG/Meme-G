@@ -11,7 +11,7 @@ const NavBar = () => {
     //build the header nav
     <nav>
       <a
-        href="https://github.com/codacdanny/memegenerator.git"
+        href="https://github.com/MakenaG/Meme-G.git"
         className="github"
       >
         <div className=" logo-right">
