@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const Search = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+const Search = ({ handleSearchChange }) => {
+  const [searchValue, setSearchValue] = useState("");
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    onSearch(event.target.value);
+  const handleChange = (e) => {
+    const { value } = e.target;
+    setSearchValue(value);
+    handleSearchChange(value);
   };
 
   return (
-    <div className="search-container">
+    <form className="flex w-1/3 mt-10 ml-96">
+      <ion-icon name="search"></ion-icon>
       <input
+        name="search"
         type="text"
-        placeholder="Search memes"
-        value={searchTerm}
-        onChange={handleSearch}
+        placeholder="Search meme ....."
+        className="bg-slate-200 rounded py-4 px-4 w-full text-gray-900 shadow-xl focus:outline-none focus:bg-slate-100 focus:shadow-outline mr-2"
+        value={searchValue}
+        onChange={handleChange}
       />
-    </div>
+    </form>
   );
 };
 
