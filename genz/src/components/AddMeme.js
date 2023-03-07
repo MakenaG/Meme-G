@@ -63,7 +63,7 @@ const AddMeme = ({ handleAddMemes,userId}) => {
             name="message"
             rows="3"
             placeholder="Enter Message"
-            value={message}
+            value={comment}
             onChange={(e) => setMessage(e.target.value)}
           ></textarea>
         </div>
