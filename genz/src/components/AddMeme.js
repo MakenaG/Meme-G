@@ -1,81 +1,74 @@
+import React from "react";
+import Dropzone from "react-dropzone-uploader";
+import "react-dropzone-uploader/dist/styles.css";
+import { getDroppedOrSelectedFiles } from "html5-file-selector";
 import { useState } from "react";
+import CustomizeMeme from "./CustomizeMeme";
 
-const AddMeme = ({ handleAddMemes,userId}) => {
-  const [title, setTitle] = useState("");
-  const [message, setMessage] = useState("");
+const AddMeme = ({ children }) => {
+  const [image, setImage] = useState();
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  let dropzoneWidth = window.innerWidth - 30;
 
-    fetch(`http://127.0.0.1:9292/users/${userId}/memes`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: title,
-        message: message,
-      }),
-    })
-      .then((r) => r.json())
-      .then((newMessage) => {
-        handleAddMemes(newMessage);
-        setMessage("");
-        setTitle("");
+  const fileParams = ({ meta }) => {
+    return { url: "https://httpbin.org/post" };
+  };
+  const onFileChange = ({ meta, file }, status) => {
+    if (status === "done") {
+      setImage(meta.previewUrl);
+    }
+  };
+
+  const getFilesFromEvent = (e) => {
+    return new Promise((resolve) => {
+      getDroppedOrSelectedFiles(e).then((chosenFiles) => {
+        resolve(chosenFiles.map((f) => f.fileObject));
       });
-  }
+    });
+  };
+  const selectFileInput = ({ onFiles, files, getFilesFromEvent }) => {
+    const textToDisplay =
+      window.innerWidth >= 768
+        ? "Upload/Drag and drop Your Image"
+        : "Upload your Image";
 
-  return (
-    <div className="mx-10 my-8">
-      <form
-        className="max-w-sm mx-auto mt-4 bg-secondary rounded-xl p-6"
-        onSubmit={handleSubmit}
-      >
-        <h1 className="text-gray-900 text-2xl font-bold text-center pb-6">
-          Add Meme
-        </h1>
-        <div className="mb-4">
-          <label
-            className="block text-gray-900 text-sm font-bold mb-2"
-            htmlFor="title"
-          >
-            Title
-          </label>
-          <input
-            className="bg-light-gray border border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-700"
-            name="title"
-            type="text"
-            placeholder="Enter Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-900 text-sm font-bold mb-2"
-            htmlFor="message"
-          >
-           Comment
-          </label>
-          <textarea
-            className="bg-light-gray border border-gray-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-700"
-            id="message"
-            name="message"
-            rows="3"
-            placeholder="Enter Message"
-            value={comment}
-            onChange={(e) => setMessage(e.target.value)}
-          ></textarea>
-        </div>
-        <div className="flex items-center justify-center">
-          <button
-            className="bg-primary hover:bg-teal-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
-            Post
-          </button>
-        </div>
-      </form>
+    const textMsg = files.length > 0 ? "Upload Again" : textToDisplay;
+
+    return (
+      <label className="btn centerBtn">
+        {textMsg}
+        <input
+          style={{ display: "none" }}
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={(e) => {
+            getFilesFromEvent(e).then((chosenFiles) => {
+              onFiles(chosenFiles);
+            });
+          }}
+        />
+      </label>
+    );
+  };
+
+  return image ? (
+    <CustomizeMeme image={image} />
+  ) : (
+    <div>
+      <Dropzone
+        onChangeStatus={onFileChange}
+        InputComponent={selectFileInput}
+        getUploadParams={fileParams}
+        getFilesFromEvent={getFilesFromEvent}
+        accept="image/*"
+        maxFiles={1}
+        inputContent="Drop A File"
+        styles={{
+          dropzone: { width: dropzoneWidth, height: 400 },
+          dropzoneActive: { borderColor: "green" },
+        }}
+      />
     </div>
   );
 };
